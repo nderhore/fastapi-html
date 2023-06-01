@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FastAPI Template Example</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Bienvenue sur ma page {{ name }}</h1>
+    <p>Ecrit le message que tu souhaites envoyer</p>
+    <input type="text" id="messageInput" placeholder="Entrez votre message ...">
+    <button onclick="sendMessage()">Envoyez</button>
+    <div id="response"></div>
+
+  <script>
+    function sendMessage(){
+      var message = document.getElementById("messageInput").value;
+
+      $.ajax({
+        url:"/api/messages/",
+        type:"POST",
+        contentType:"application/json",
+        data: JSON.stringify({contenu:message}),
+        success: function(response){
+          var responseContainer = document.getElementById("response");
+          responseContainer.innerHTML = "message envoyé " + response.message;
+        },
+        error: function(error){
+          console.error(error);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
